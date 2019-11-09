@@ -38,19 +38,3 @@ async def has_job(job, user_id):
         # returns true because the user has a job
         return True
 
-
-async def has_character(user_id):
-    db_connection = await db.dbconnection()
-    cursor = await db_connection.cursor()
-    sql = "SELECT `name` FROM `character` WHERE user_id = '%S'"
-    val = user_id
-    await cursor.execute(sql, (val,))
-    result = await cursor.fetchall()
-    await cursor.close()
-    db_connection.close()
-    if is_empty(result):
-        # returns false because the user doesnt have a character
-        return False
-    else:
-        # returns true because the users has a character
-        return True

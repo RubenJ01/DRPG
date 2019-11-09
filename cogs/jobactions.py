@@ -3,6 +3,7 @@ import random
 import json
 
 from utils.functions_ import has_job
+from utils.checks import has_character
 from utils.database import db_functions as db
 
 from discord.ext.commands import Cog, command, cooldown
@@ -24,6 +25,7 @@ class JobactionsCog(Cog, name='Job Actions'):
     def __init__(self, bot):
         self.bot = bot
 
+    @has_character()
     @command(name="mine")
     @cooldown(1, 60, BucketType.user)
     async def mine_cmd(self, ctx):
@@ -47,7 +49,6 @@ class JobactionsCog(Cog, name='Job Actions'):
             index = 0
             for level in data:
                 if actions >= level['actions_required']:
-                    current_index = index
                     mining_level = level['level']
                 index = index + 1
             for level in data:

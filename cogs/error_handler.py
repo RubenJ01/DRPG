@@ -1,6 +1,8 @@
 import logging
 import math
 
+import utils.checks
+
 from discord.ext import commands
 
 
@@ -31,6 +33,12 @@ class CommandErrorHandler(commands.Cog, name='ErrorHandler'):
         elif isinstance(error, commands.TooManyArguments):
             log.debug(f'{ctx.author} used {ctx.command} but arguments passed were many.')
             await ctx.send("Too many arguments were passed! Please try again.")
+
+        elif isinstance(error, commands.CheckFailure):
+            if type(error) == utils.checks.NotBotAdmin:
+                await ctx.send("This command is only accesable for a bot admin.")
+            if type(error) == utils.checks.NoCharacter:
+                await ctx.send("You need a character to use this command. Use `!character` to create one.")
 
         else:
             raise error

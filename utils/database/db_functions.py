@@ -36,7 +36,7 @@ async def sql_query(sql_code, values=()):
             await cur.execute(sql_code, values)
         except Exception as e:
             logger.error(f"ERROR WHILE EXECUTING SQL:\n{str(e)}")
-            results=[]
+            results = []
             conn.close()
             return results
         else:
